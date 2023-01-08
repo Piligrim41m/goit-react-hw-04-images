@@ -13,7 +13,6 @@ export default function Preloader() {
   wrapperClass="blocks-wrapper"
   colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
 />
-      {/* <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} /> */}
     </div>
   );
 }
