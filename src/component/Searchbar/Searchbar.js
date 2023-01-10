@@ -25,7 +25,6 @@ function Searchbar({ onSubmit }) {
       <form className={s.form} onSubmit={handleSubmit}>
         <button type="submit" className={s.button}>
           <FaSearch size={12}/>
-          {/* <span className={s.buttonLabel}>Search</span> */}
         </button>
 
         <input
