@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 
 import s from './App.module.css';
@@ -26,6 +27,7 @@ function App() {
     }
     fetchGallary();
     
+  
   }, [searchQuery]);
 
   const fetchGallary = () => {
