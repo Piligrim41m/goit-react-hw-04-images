@@ -21,8 +21,11 @@ function App() {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
+    if (searchQuery === '') {
+      return;
+    }
     fetchGallary();
-    // eslint-disable-next-line react-hooks/exhaustive-deps    
+    
   }, [searchQuery]);
 
   const fetchGallary = () => {

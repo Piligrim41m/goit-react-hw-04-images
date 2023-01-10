@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import { FaSearch } from 'react-icons/fa';
 import s from './Searchbar.module.css';
 
 function Searchbar({ onSubmit }) {
@@ -24,7 +24,8 @@ function Searchbar({ onSubmit }) {
     <header className={s.container}>
       <form className={s.form} onSubmit={handleSubmit}>
         <button type="submit" className={s.button}>
-          <span className={s.buttonLabel}>Search</span>
+          <FaSearch size={12}/>
+          {/* <span className={s.buttonLabel}>Search</span> */}
         </button>
 
         <input
