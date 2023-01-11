@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import s from './App.module.css';
 
@@ -20,28 +20,19 @@ function App() {
   const [largeImage, setLargeImage] = useState({});
   const [total, setTotal] = useState(0);
 
-  useEffect(() => {
-    if (searchQuery === '') {
-      return;
-    }
-    fetchGallary();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery]);
-
-  const fetchGallary = () => {
+  const fetchGallary = useCallback(() => {
     setShowLoader(true);
 
     fetchDataApi(searchQuery, page)
       .then(({ hits, total }) => {
         setGallery(prev => [...prev, ...hits]);
-        setPage(prev => prev + 1);
         setTotal(total);
 
         scrollToDown();
       })
       .catch(error => setError(error))
       .finally(() => setShowLoader(false));
-  };
+  }, [page, searchQuery]);
 
   const scrollToDown = () => {
     window.scrollTo({
@@ -73,6 +64,17 @@ function App() {
     return Math.ceil(total / 12) !== page - 1;
   };
 
+  const loadMore = () => {
+    setPage(prevPage => prevPage + 1)
+  }
+
+  useEffect(() => {
+    if (searchQuery === '') {
+      return;
+    }
+    fetchGallary();
+  }, [fetchGallary, searchQuery]);
+
   return (
     <div className={s.container}>
       <Searchbar onSubmit={handleFormSubmit} />
@@ -86,7 +88,7 @@ function App() {
       {showLoader && <PreLoader />}
 
       {gallery.length > 0 && !showLoader && showLoadMore() && (
-        <LoadMore onLoadMore={fetchGallary} />
+        <LoadMore onLoadMore={loadMore} />
       )}
 
       {showModal && (
