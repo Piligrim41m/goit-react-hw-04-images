@@ -1,3 +1,34 @@
+import { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import css from './Modal.module.css';
+export default function Modal({ onClose, children }) {
+  useEffect(() => {
+    const handleKeyDown = evt => {
+      if (evt.code === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
+  const handleOverlayClick = evt => {
+    if (evt.currentTarget === evt.target) {
+      onClose();
+    }
+  };
+  return (
+    <div className={css.overlay} onClick={handleOverlayClick}>
+      <div className={css.modal}>{children}</div>
+    </div>
+  );
+}
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
+};
+
 // import { useEffect } from 'react';
 // // import { createPortal } from 'react-dom';
 // import ReactDOM from 'react-dom/client';
@@ -40,33 +71,3 @@
 // };
 
 // export default Modal;
-import { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import css from './Modal.module.css';
-export default function Modal({ onClose, children }) {
-  useEffect(() => {
-    const handleKeyDown = evt => {
-      if (evt.code === 'Escape') {
-        onClose();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [onClose]);
-  const handleOverlayClick = evt => {
-    if (evt.currentTarget === evt.target) {
-      onClose();
-    }
-  };
-  return (
-    <div className={css.overlay} onClick={handleOverlayClick}>
-      <div className={css.modal}>{children}</div>
-    </div>
-  );
-}
-Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
-};
